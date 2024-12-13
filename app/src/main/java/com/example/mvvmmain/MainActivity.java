@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mvvmmain.Api.RetrofitHelper;
 import com.example.mvvmmain.Model.Quote;
+import com.example.mvvmmain.QuoteDB.MyQuoteDB;
 import com.example.mvvmmain.Repository.QuoteRepository;
 import com.example.mvvmmain.ViewModels.MainViewModel;
 import com.example.mvvmmain.ViewModels.MainViewModelFactory;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        QuoteRepository quoteRepository=new QuoteRepository(RetrofitHelper.getInstance());
+        QuoteRepository quoteRepository=new QuoteRepository(RetrofitHelper.getInstance(), MyQuoteDB.getInstance(this),this);
         mainViewModel= new ViewModelProvider(this, new MainViewModelFactory(quoteRepository)).get(MainViewModel.class);
         mainViewModel.getQuotes().observe(this, quotes -> {
             if(quotes!=null){
